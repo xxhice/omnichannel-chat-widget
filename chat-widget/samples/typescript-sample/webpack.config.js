@@ -1,11 +1,8 @@
 
-import path from "path";
+const path = require("path");
 import type { Configuration } from "webpack";
-import { dirname } from "path";
-import { fileURLToPath } from "url";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __dirname = path.resolve();
 
 const disableFullyQualifiedNameResolutions = {
     test: /\.m?js/,

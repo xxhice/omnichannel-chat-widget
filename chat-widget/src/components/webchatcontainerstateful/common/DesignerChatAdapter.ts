@@ -1,19 +1,46 @@
+import { customerUser, postBotAttachmentActivity, postBotMessageActivity, postBotMessageWithSuggestedActionsActivity, postEchoActivity, postSystemMessageActivity } from "./utils/chatAdapterUtils";
+
 import { Message } from "botframework-directlinejs";
-import { Observable } from "rxjs/Observable";
 import MockAdapter from "./mockadapter";
-import { customerUser, postBotMessageActivity, postEchoActivity, postSystemMessageActivity } from "./utils/chatAdapterUtils";
+import { Observable } from "rxjs/Observable";
 
 export class DesignerChatAdapter extends MockAdapter {
-    constructor() {
-        super();
+    public messages?: Message[];
 
-        setTimeout(() => {
-            postBotMessageActivity(this.activityObserver, "Thank you for contacting us! How can I help you today?", undefined, 0);
-            this.postUserActivity("I need to change my address.", 0);
-            postBotMessageActivity(this.activityObserver, "Okay, let me connect you with a live agent.", undefined, 100);
-            postSystemMessageActivity(this.activityObserver, "John has joined the chat", 100);
-            postBotMessageActivity(this.activityObserver, "I'd be happy to help you update your account.", undefined, 100);
-        }, 1000);
+    constructor(messages?: Message[]) {
+        super();
+        this.messages = messages;
+        if (this.messages) {
+            if (this.messages.length > 0) {
+                setTimeout(() => {
+                    this.messages?.forEach((msg, index) => {
+                        this.processMessage(msg, index);
+                    });
+                }, 1000); // Initial 1 second delay to ensure activityObserver is ready
+            }
+        } else {
+            // Default hardcoded flow
+            setTimeout(() => {
+                postBotMessageActivity(this.activityObserver, "Thank you for contacting us! How can I help you today?", undefined, 0);
+                this.postUserActivity("I need to change my address.", 0);
+                postBotMessageActivity(this.activityObserver, "Okay, let me connect you with a live agent.", undefined, 100);
+                postSystemMessageActivity(this.activityObserver, "John has joined the chat", 100);
+                postBotMessageActivity(this.activityObserver, "I'd be happy to help you update your account.", undefined, 100);
+            }, 1000);
+        }
+    }
+
+    private processMessage(msg: Message, index: number) {
+        if (msg.text) {
+            if (msg.suggestedActions) {
+                postBotMessageWithSuggestedActionsActivity(this.activityObserver, msg.text, msg.suggestedActions, index * 100);
+            } else {
+                postBotMessageActivity(this.activityObserver, msg.text, undefined, index * 100);
+            }
+        }
+        if (msg.attachments && msg.attachments.length > 0) {
+            postBotAttachmentActivity(this.activityObserver, msg.attachments, index * 100, msg.attachmentLayout);
+        }
     }
 
     private postUserActivity(text: string, delay = 1000) {

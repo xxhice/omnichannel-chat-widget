@@ -1,6 +1,7 @@
-import { uuidv4 } from "@microsoft/omnichannel-chat-sdk";
 import { Activity, Attachment, Message, User } from "botframework-directlinejs";
+
 import { Subscriber } from "rxjs/Subscriber";
+import { uuidv4 } from "@microsoft/omnichannel-chat-sdk";
 
 export const customerUser: User = {
     id: "usedId",
@@ -11,6 +12,12 @@ export const customerUser: User = {
 export const botUser: User = {
     id: "botId",
     name: "Bot",
+    role: "bot"
+};
+
+export const CSRUser: User = {
+    id: "csrId",
+    name: "Customer Service Representative",
     role: "bot"
 };
 
@@ -48,6 +55,26 @@ export const postBotMessageActivity = (activityObserver: Subscriber<Activity> | 
     }, delay);
 };
 
+export const postBotMessageWithSuggestedActionsActivity = (
+    activityObserver: Subscriber<Activity> | undefined, 
+    text: string, 
+    suggestedActions: any, 
+    delay = 1000
+): void => {
+    setTimeout(() => {
+        activityObserver?.next({
+            id: uuidv4(),
+            from: {
+                ...botUser
+            },
+            text,
+            type: "message",
+            suggestedActions,
+            timestamp: new Date().toISOString()
+        });
+    }, delay);
+};
+
 export const postSystemMessageActivity = (activityObserver: Subscriber<Activity> | undefined, text: string, delay = 1000): void => {
     postBotMessageActivity(activityObserver, text, "system", delay);
 };
@@ -64,16 +91,19 @@ export const postBotTypingActivity = (activityObserver: Subscriber<Activity> | u
     }, delay);
 };
 
-export const postBotAttachmentActivity = (activityObserver: Subscriber<Activity> | undefined, attachments: Attachment[] = [], delay = 1000): void => {
+export const postBotAttachmentActivity = (activityObserver: Subscriber<Activity> | undefined, attachments: Attachment[] = [], delay = 1000, attachmentLayout?: string): void => {
     setTimeout(() => {
-        activityObserver?.next({
+        const activity: any = {
             id: uuidv4(),
             from: {
                 ...botUser
             },
             attachments,
+            attachmentLayout,
             type: "message",
             timestamp: new Date().toISOString()
-        });
+        };
+
+        activityObserver?.next(activity);
     }, delay);
 };
