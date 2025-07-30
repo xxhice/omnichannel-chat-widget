@@ -1,12 +1,14 @@
-import { OmnichannelChatSDK } from "@microsoft/omnichannel-chat-sdk";
-import { getMockChatSDKIfApplicable, LiveChatWidget } from "@microsoft/omnichannel-chat-widget";
-import React, { useEffect, useState } from "react";
-import ReactDOM from "react-dom/client";
+import * as OcChatComponentPackageInfo from "@microsoft/omnichannel-chat-components/package.json";
 import * as OcChatSdkPackageinfo from "@microsoft/omnichannel-chat-sdk/package.json";
 import * as OcChatWidgetPackageInfo from "@microsoft/omnichannel-chat-widget/package.json";
-import * as OcChatComponentPackageInfo from "@microsoft/omnichannel-chat-components/package.json";
-import { defaultProps } from "../src/common/defaultProps";
+
+import { LiveChatWidget, getMockChatSDKIfApplicable } from "@microsoft/omnichannel-chat-widget";
+import React, { useEffect, useState } from "react";
+
 import { CoffeeChatIconBase64 } from "../src/common/assets";
+import { OmnichannelChatSDK } from "@microsoft/omnichannel-chat-sdk";
+import ReactDOM from "react-dom/client";
+import { defaultProps } from "../src/common/defaultProps";
 
 const getOmnichannelChatConfig = () => {
     // Use dummy values for designer mode
@@ -377,7 +379,7 @@ const App = () => {
                 ]
             };
 
-             // Second carousel for tuning - simplified cards
+            // Second carousel for tuning - simplified cards
             const cardsMessage2 = {
                 type: "message",
                 id: "test-activity-carousel-2",
@@ -529,7 +531,7 @@ const App = () => {
             setLiveChatWidgetProps(liveChatWidgetProps);
             
             // Apply CSS with CORRECT selectors found from DOM inspection
-            const style = document.createElement('style');
+            const style = document.createElement("style");
             style.textContent = `
                 /* Target carousel hero card images for consistent sizing */
                 ul.webchat__carousel-filmstrip__attachments .ac-image {

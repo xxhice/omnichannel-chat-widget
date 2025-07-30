@@ -1,8 +1,5 @@
 
 const path = require("path");
-import type { Configuration } from "webpack";
-
-const __dirname = path.resolve();
 
 const disableFullyQualifiedNameResolutions = {
     test: /\.m?js/,
@@ -26,9 +23,14 @@ const babelLoaderConfiguration = {
     }
 };
 
-const config: Configuration = {
+const config = {
     entry: "./src/index.tsx",
     mode: "development",
+    devServer: {
+        client: {
+            overlay: false, // Disable the error overlay
+        },
+    },
     module: {
         rules: [
             babelLoaderConfiguration,
@@ -38,7 +40,11 @@ const config: Configuration = {
     resolve: {
         extensions: [".tsx", ".ts", ".js"],
         alias: {
-            "react-native$": "react-native-web"
+            "react-native$": "react-native-web",
+            "react-native": "react-native-web",
+            // Force all React imports to use the same version
+            "react": path.resolve(__dirname, "node_modules/react"),
+            "react-dom": path.resolve(__dirname, "node_modules/react-dom")
         },
         fallback: {
             assert: "assert",
@@ -62,4 +68,4 @@ const config: Configuration = {
     // ]
 };
 
-export default config;
+module.exports = config;
