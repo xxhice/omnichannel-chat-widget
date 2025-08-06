@@ -8,11 +8,11 @@ export class DesignerChatSDK extends MockChatSDK {
     }
 
     /**
-     * Create a chat adapter for the designer. Uses this.designerMessages if set.
+     * Create a chat adapter for the designer. Uses this.mockActivities if set.
      */
-    public designerMessages?: Message[];
+    public mockActivities?: Message[];
     public createChatAdapter() {
-        const adapter = new DesignerChatAdapter(this.designerMessages);
+        const adapter = new DesignerChatAdapter(this.mockActivities);
         return adapter;
     }
 
