@@ -143,6 +143,7 @@ export enum TelemetryEvent {
     EmailTranscriptLoaded = "EmailTranscriptLoaded",
     OutOfOfficePaneLoaded = "OutOfOfficePaneLoaded",
     ConfirmationPaneLoaded = "ConfirmationPaneLoaded",
+    CitationPaneLoaded = "CitationPaneLoaded",
     ProactiveChatPaneLoaded = "ProactiveChatPaneLoaded",
     ReconnectChatPaneLoaded = "ReconnectChatPaneLoaded",
     HeaderCloseButtonClicked = "HeaderCloseButtonClicked",
@@ -186,6 +187,8 @@ export enum TelemetryEvent {
     ProcessingSanitizationMiddlewareFailed = "ProcessingSanitizationMiddlewareFailed",
     FormatTagsMiddlewareJSONStringifyFailed = "FormatTagsMiddlewareJSONStringifyFailed",
     AttachmentUploadValidatorMiddlewareFailed = "AttachmentUploadValidatorMiddlewareFailed",
+    CitationMiddlewareFailed = "CitationMiddlewareFailed",
+
     QueuePositionMessageRecieved = "QueuePositionMessageRecieved",
     AverageWaitTimeMessageRecieved = "AverageWaitTimeMessageRecieved",
     DataMaskingRuleApplied = "DataMaskingRuleApplied",
@@ -284,7 +287,9 @@ export enum TelemetryEvent {
     UXLCWChatButtonLoadingStart = "UXLCWChatButtonLoadingStart",
     UXLCWChatButtonLoadingCompleted = "UXLCWChatButtonLoadingCompleted",
     UXConfirmationPaneStart = "UXConfirmationPaneStart",
+    UXCitationPaneStart = "UXCitationPaneStart",
     UXConfirmationPaneCompleted = "UXConfirmationPaneCompleted",
+    UXCitationPaneCompleted = "UXCitationPaneCompleted",
     UXLiveChatWidgetStart = "UXLiveChatWidgetStart",
     UXLiveChatWidgetCompleted = "UXLiveChatWidgetCompleted",
 

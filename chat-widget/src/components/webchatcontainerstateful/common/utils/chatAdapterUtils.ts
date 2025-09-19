@@ -15,9 +15,9 @@ export const botUser: User = {
     role: "bot"
 };
 
-export const CSRUser: User = {
-    id: "csrId",
-    name: "Customer Service Representative",
+export const agentUser: User = {
+    id: "AgentId",
+    name: "John",
     role: "bot"
 };
 
@@ -55,6 +55,23 @@ export const postBotMessageActivity = (activityObserver: Subscriber<Activity> | 
     }, delay);
 };
 
+export const postAgentMessageActivity = (activityObserver: Subscriber<Activity> | undefined, text: string, tags = "", delay = 1000): void => {
+    setTimeout(() => {
+        activityObserver?.next({
+            id: uuidv4(),
+            from: {
+                ...agentUser
+            },
+            text,
+            type: "message",
+            channelData: {
+                tags
+            },
+            timestamp: new Date().toISOString()
+        });
+    }, delay);
+};
+
 export const postBotMessageWithSuggestedActionsActivity = (
     activityObserver: Subscriber<Activity> | undefined, 
     text: string, 
@@ -65,7 +82,7 @@ export const postBotMessageWithSuggestedActionsActivity = (
         activityObserver?.next({
             id: uuidv4(),
             from: {
-                ...botUser
+                ...agentUser
             },
             text,
             type: "message",
